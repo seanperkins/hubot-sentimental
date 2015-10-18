@@ -98,6 +98,8 @@ module.exports = (robot) ->
           userField = {title: 'User', value: users.join('\n'), short: true}
           happinessField = {title: 'Rating', value: averages.join('\n'), short: true}
           attachment.fields.push(userField, happinessField)
-          msg.send({attachments:[attachment]})
+          message = {attachments:[attachment]}
+          console.log(message)
+          msg.send(message)
       else
         msg.send "I haven't collected data on anybody yet"
