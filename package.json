@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "Sentimental": "0.0.4",
-    "redis": ">= 0.10.0"
+    "redis": ">= 0.10.0",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "coffee-script": "1.1.3"

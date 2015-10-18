@@ -23,6 +23,7 @@ negativity = require('Sentimental').negativity
 
 Url   = require "url"
 Redis = require "redis"
+_     = require "lodash"
 
 module.exports = (robot) ->
 
@@ -75,9 +76,28 @@ module.exports = (robot) ->
         if username != "everyone" and (!sent[username] or sent[username].average == undefined)
           msg.send "#{username} has no happiness average yet"
         else
-          for user, data of sent
-            if (user == username or username == "everyone") and data.average != undefined
-              msg.send "#{user} has a happiness average of #{data.average}"
+          combined = _.map(sent, (object, key) ->
+            ret = {user: key}
+            ret = _.merge(ret, object)
+            return ret
+          )
+          sorted = _.sortByOrder(combined, 'average', 'desc')
+          attachment = {
+            fallback: "#{sorted[0].user} leads in happiness with #{_.round(sorted[0].average)}",
+            text: 'Happiness Index',
+            fields: [],
+            color: 'good'
+          }
+          users = []
+          averages = []
+          for user, data of sorted
+            if (data.user == username or username == "everyone") and data.average != undefined
+              average = _.round(data.average, 2)
+              users.push(data.user)
+              averages.push(average)
+          userField = {title: 'User', value: users.join('\n'), short: true}
+          happinessField = {title: 'Rating', value: averages.join('\n'), short: true}
+          attachment.fields.push(userField, happinessField)
+          msg.send({attachments:[attachment]})
       else
         msg.send "I haven't collected data on anybody yet"
-
