@@ -68,6 +68,7 @@ module.exports = (robot) ->
 
   robot.respond /check on (.*)/i, (msg) ->
     username = msg.match[1]
+    robot.logger.info 'Can you see me now above?'
     client.get "sent:userScore", (err, reply) ->
       if err
         robot.emit 'error', err
@@ -99,6 +100,7 @@ module.exports = (robot) ->
           happinessField = {title: 'Rating', value: averages.join('\n'), short: true}
           attachment.fields.push(userField, happinessField)
           message = {attachments:[attachment]}
+          robot.logger.info 'Can you see me now?'
           console.log('In the logs?')
           console.log(message)
           msg.send(message)
