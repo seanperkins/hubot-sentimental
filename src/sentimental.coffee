@@ -26,7 +26,7 @@ Redis = require "redis"
 _     = require "lodash"
 
 module.exports = (robot) ->
-
+  robot.logger.info "Why does this work?" 
 # check for redistogo auth string for heroku users
 # see https://github.com/hubot-scripts/hubot-redis-brain/issues/3
   info = Url.parse process.env.REDISTOGO_URL or process.env.REDISCLOUD_URL or process.env.BOXEN_REDIS_URL or process.env.REDIS_URL or 'redis://localhost:6379'
