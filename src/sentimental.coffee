@@ -99,6 +99,7 @@ module.exports = (robot) ->
           happinessField = {title: 'Rating', value: averages.join('\n'), short: true}
           attachment.fields.push(userField, happinessField)
           message = {attachments:[attachment]}
+          console.log('In the logs?')
           console.log(message)
           msg.send(message)
       else
